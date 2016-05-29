@@ -175,9 +175,19 @@ void QuickSortInsertion (int *vetor, int esq, int dir){
 }
 
 int Comparacao (){
-	return comp;
+	int aux;
+
+	aux=comp;
+	comp=0;
+
+	return aux;
 }
 
 int Copia (){
-	return copia;
+	int aux;
+
+	aux=copia;
+	copia=0;
+
+	return aux;
 }
