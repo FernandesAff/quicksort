@@ -85,12 +85,14 @@ void TrocaPosicao (Apontador no1, Apontador no2){
 	no1->posicao=aux;
 }
 
-void ImprimirLista (TipoLista Lista){
-	Apontador Atual=Lista.Primeiro->Prox;
-	int i=1;
+void EsvaziarLista (TipoLista *Lista){
+	Apontador no=Lista->Primeiro, aux;
 
-	while(Atual!=NULL){
-		printf("%d) %d\n",Atual->posicao, Atual->chave);
-		Atual=Atual->Prox;
+	while(no!=NULL){
+		aux=no;
+		no=no->Prox;
+		free (aux);
 	}
+	Lista->Primeiro = NULL;
+	Lista->Ultimo=Lista->Primeiro;
 }

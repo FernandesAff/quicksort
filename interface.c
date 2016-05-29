@@ -15,102 +15,90 @@ void show_help(char *name) {/*Mostra uma tela de ajuda ao usuario*/
     exit(-1) ;
 }
 
-/*void Saida (char *saidaarq){
-	FILE *fp;
-}*/
-
-void InterfaceVetor (int seed, int tam){
-	int *vetor, tempo,comp,copia;
+int InterfaceVetor (int seed, int tam){
+	int *vetor, tempo;
 	struct timeval inicio, final;
 
 	vetor=(int *)malloc(tam*sizeof(int));
 	PreencherVetor(seed,vetor,tam);
-	printf("Lista Inserida:\n\n");
-	ImprimirVetor(vetor,tam);
 
 	gettimeofday(&inicio, NULL);
 	QuickSortVetor(vetor,0,tam-1);
 	gettimeofday(&final, NULL);
 	tempo=(int) (1000 * (final.tv_sec - inicio.tv_sec) + (final.tv_usec - inicio.tv_usec) / 1000);
 	
-	printf("\nLista Ordenada:\n\n");
-	ImprimirVetor(vetor,tam);
-	
-	printf("\n%d milisegundos\n", tempo);
-	printf("%d comparacoes\n", comp=Comparacao());
-	printf("%d copias\n", copia=Copia());
+	free(vetor);
 
+	return tempo;
 }
 
-void InterfaceLista (int seed, int tam){
+int InterfaceLista (int seed, int tam){
 	TipoLista Lista;
 	int tempo,comp,copia;
 	struct timeval inicio, final;
 
 	FLVazia(&Lista);
 	PreencherLista (seed,&Lista,tam);
-	printf("Lista Inserida:\n\n");
-	ImprimirLista (Lista);
 	
 	gettimeofday(&inicio, NULL);
 	QuickSortLista(&Lista,Lista.Primeiro->Prox, Lista.Ultimo);
 	gettimeofday(&final, NULL);
 	tempo=(int) (1000 * (final.tv_sec - inicio.tv_sec) + (final.tv_usec - inicio.tv_usec) / 1000);
 
-	printf("\nLista Ordenada:\n\n");
-	ImprimirLista (Lista);
+	EsvaziarLista(&Lista);
 
-	printf("\n%d milisegundos\n", tempo);
-	printf("%d comparacoes\n", comp=Comparacao());
-	printf("%d copias\n", copia=Copia());
+	return tempo;
 }
 
-void InterfaceMediana(int seed, int tam){
-	int *vetor,tempo,comp,copia;
+int InterfaceMediana(int seed, int tam){
+	int *vetor,tempo;
 	struct timeval inicio, final;
 
 	vetor=(int *)malloc(tam*sizeof(int));
 	PreencherVetor(seed,vetor,tam);
-	printf("Lista Inserida:\n\n");
-	ImprimirVetor(vetor,tam);
 
 	gettimeofday(&inicio, NULL);
 	QuickSortMediana(vetor,0,tam-1);
 	gettimeofday(&final, NULL);
 	tempo=(int) (1000 * (final.tv_sec - inicio.tv_sec) + (final.tv_usec - inicio.tv_usec) / 1000);
 
-	printf("\nLista Ordenada:\n\n");
-	ImprimirVetor(vetor,tam);
+	free(vetor);
 
-	printf("\n%d milisegundos\n", tempo);
-	printf("%d comparacoes\n", comp=Comparacao());
-	printf("%d copias\n", copia=Copia());
+	return tempo;
 }
 
-void InterfaceInsertion(int seed, int tam){
-	int *vetor,tempo,comp,copia;
+int InterfaceInsertion(int seed, int tam){
+	int *vetor,tempo;
 	struct timeval inicio, final;
 
 	vetor=(int *)malloc(tam*sizeof(int));
 	PreencherVetor(seed,vetor,tam);
-	printf("Lista Inserida:\n\n");
-	ImprimirVetor(vetor,tam);
 
 	gettimeofday(&inicio, NULL);
 	QuickSortInsertion(vetor,0,tam-1);
 	gettimeofday(&final, NULL);
 	tempo=(int) (1000 * (final.tv_sec - inicio.tv_sec) + (final.tv_usec - inicio.tv_usec) / 1000);
 
-	printf("\nLista Ordenada:\n\n");
-	ImprimirVetor(vetor,tam);
+	free(vetor);
 
-	printf("\n%d milisegundos\n", tempo);
-	printf("%d comparacoes\n", comp=Comparacao());
-	printf("%d copias\n", copia=Copia());
+	return tempo;
+}
+
+void Saida (char *saidaarq, int tempo, int seed, int opcao, int tam){
+	FILE *fp;
+	int comp, copia;
+
+	fp=fopen(saidaarq, "a+");
+
+	comp=Comparacao();
+	copia=Copia();
+	fprintf(fp, "%d %d %d %d %d %d\n",opcao,tam,seed,tempo,comp,copia);
+
+	fclose(fp);	
 }
 
 void ApresentarInterface(int seed, char *entradaarq, char *saidaarq){
-	int tam,opcao,valn;
+	int tam,opcao,valn, tempo;
 	FILE *fp;
 
 	fp=fopen(entradaarq, "r+");
@@ -127,24 +115,28 @@ void ApresentarInterface(int seed, char *entradaarq, char *saidaarq){
 	switch(opcao){
 		case 1:
 			while((fscanf(fp,"%d\n", &tam))!=EOF){
-				InterfaceVetor(seed, tam);
+				tempo=InterfaceVetor(seed, tam);
+				Saida (saidaarq,tempo,seed,opcao,tam);
 			}
 			break;
 		case 2:
 			while((fscanf(fp,"%d\n", &tam))!=EOF){
-				InterfaceLista(seed, tam);
+				tempo=InterfaceLista(seed, tam);
+				Saida (saidaarq,tempo,seed,opcao,tam);
 			}
 			break;
 		case 3:
 			while((fscanf(fp,"%d\n", &tam))!=EOF){
-				InterfaceMediana(seed, tam);
+				tempo=InterfaceMediana(seed, tam);
+				Saida (saidaarq,tempo,seed,opcao,tam);
 			}
 			break;
 		case 4:
 			while((fscanf(fp,"%d\n", &tam))!=EOF){
-				InterfaceInsertion(seed, tam);
+				tempo=InterfaceInsertion(seed, tam);
+				Saida (saidaarq,tempo,seed,opcao,tam);
 			}
-			break;		
+			break;	
 	}
 	fclose(fp);
 }

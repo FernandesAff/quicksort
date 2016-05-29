@@ -4,7 +4,7 @@
 #include "interface.h"
 
 int main (int argc, char **argv){
-	int opt, seed;
+	int opt, seed, tempo, opcao;
 	char *entradaarq, *saidaarq;
 
 	if ( argc < 3 ){/*Mostra as opcoes de execucao do programa no terminal*/

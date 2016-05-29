@@ -4,10 +4,11 @@
 #define INTERFACE_H
 
 void show_help(char *);
-void InterfaceVetor (int, int);
-void InterfaceLista (int, int);
-void InterfaceMediana(int, int);
-void InterfaceInsertion(int, int);
-void ApresentarInterface(int, char *, char *);
+int InterfaceVetor (int, int);
+int InterfaceLista (int, int);
+int InterfaceMediana(int, int);
+int InterfaceInsertion(int, int);
+void Saida (char *, int, int,int,int);
+void ApresentarInterface(int, char *,char *);
 
 #endif

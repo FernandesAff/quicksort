@@ -13,14 +13,6 @@ void PreencherVetor (int seed, int *vetor, int tam){
 	}
 }
 
-void ImprimirVetor (int *vetor, int tam) {
-	int i;
-
-	for(i=0;i<tam;i++){
-		printf("%d)%d\n",(i+1),vetor[i]);
-	}
-}
-
 void TrocaChave (int *vetor, int chave1, int chave2){
 	int aux;
 

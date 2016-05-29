@@ -20,6 +20,6 @@ void PreencherLista (int,TipoLista *,int);
 void Inserir (TipoLista *, int );
 void TrocaNo (Apontador,Apontador);
 void TrocaPosicao (Apontador,Apontador);
-void ImprimirLista (TipoLista);
+void EsvaziarLista (TipoLista *);
 
 #endif

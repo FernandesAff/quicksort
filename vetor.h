@@ -4,7 +4,6 @@
 #define VETOR_H
 
 void PreencherVetor (int,int *,int);
-void ImprimirVetor (int *,int);
 void TrocaChave (int *, int, int);
 
 #endif
